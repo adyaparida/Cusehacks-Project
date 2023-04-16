@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>College Campus Accessibility Guide</title>
+    <style>
+      #map {
+        height: 500px;
+        width: 100%;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_X8beEYuoNJhTLf-0-8G9NiBCllk9S5w&libraries=places"
+    async defer></script>
+  </head>
+  <body onload="initMap()">
+    <div>
+      <label for="building-type">Building Type:</label>
+      <select id="building-type" onchange="filterMarkers()">
+        <option value="all">All</option>
+        <option value="academic">Academic</option>
+        <option value="administrative">Administrative</option>
+      </select>
+    </div>
+    <div>
+      <label for="accessibility-type">Accessibility:</label>
+      <select id="accessibility-type" onchange="filterMarkers()">
+        <option value="all">All</option>
+        <option value="accessible">Accessible</option>
+        <option value="partially-accessible">Partially Accessible</option>
+        <option value="not-accessible">Not Accessible</option>
+      </select>
+    </div>
+    <div id="map"></div>
+
+    <script>
+      // JavaScript code goes here
+      var map;
+      var markers = [];
+      var infoWindow;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 43.03767, lng: -76.13399},
+          zoom: 16
+        });
+        infoWindow = new google.maps.InfoWindow();
+        addMarkersToMap();
+      }
+
+      function addMarkersToMap() {
+        var buildings = [
+          {name: "Smith Hall", type: "academic", accessibility: "accessible", location: {lat: 37.422, lng: -122.084}},
+          {name: "Jones Hall", type: "academic", accessibility: "partially-accessible", location: {lat: 37.422, lng: -122.086}},
+          {name: "Brown Hall", type: "administrative", accessibility: "not-accessible", location: {lat: 37.422, lng: -122.088}}
+        ];
+  
+        for (var i = 0; i < buildings.length; i++) {
+          var marker = new google.maps.Marker({
+            position: buildings[i].location,
+            title: buildings[i].name,
+            type: buildings[i].type,
+            accessibility: buildings[i].accessibility,
+            map: map
+          });
+          markers.push(marker);
+          marker.addListener('click', function() {
+            var content = "<h3>" + this.title + "</h3><p>Type: " + this.type + "</p><p>Accessibility: " + this.accessibility + "</p>";
+            infoWindow.setContent(content);
+            infoWindow.open(map, this);
+          });
+        }
+      }
+
+      function filterMarkers() {
+        var buildingType = document.getElementById("building-type").value;
+        var accessibilityType = document.getElementById("accessibility-type").value;
+        for (var i = 0; i < markers.length; i++) {
+          var marker = markers[i];
+          if ((buildingType == "all" || marker.type == buildingType) && (accessibilityType == "all" || marker.accessibility == accessibilityType)) {
+            marker.setVisible(true);
+          } 
+          else {
+            marker.setVisible(false);
+          }
+        }
+      }
+    </script>
+    </head>
+    <body>
+      <h1>College Campus Accessibility Guide</h1>
+      <div>
+        <label for="building-type">Building Type:</label>
+        <select id="building-type" onchange="filterMarkers()">
+          <option value="all">All</option>
+          <option value="classroom">Classroom</option>
+          <option value="dormitory">Dormitory</option>
+          <option value="administration">Administration</option>
+          <option value="library">Library</option>
+        </select>
+        <label for="accessibility-type">Accessibility:</label>
+        <select id="accessibility-type" onchange="filterMarkers()">
+          <option value="all">All</option>
+          <option value="accessible">Accessible</option>
+          <option value="partially-accessible">Partially Accessible</option>
+          <option value="inaccessible">Inaccessible</option>
+        </select>
+      </div>
+      <div id="map"></div>
+      <div>
+      <h2>Directions</h2>
+      <button onclick="getDirections()">Get Directions to Building</button>
+      <div id="map"></div>
+    </div>
+    </body>
+  </html>

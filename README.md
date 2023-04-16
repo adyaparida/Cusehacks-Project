@@ -1,6 +1,6 @@
-# Cusehacks-Project
+# Cusehacks-Project Abled
 
-A campus accessibility guide is a website that provides information on the accessibility of a university campus for students with disabilities. The guide typically includes information on the accessibility of buildings, classrooms, and facilities on campus, as well as information on accessibility services and resources available to students.
+Abled is a campus accessibility guide is a website that provides information on the accessibility of a university campus for students with disabilities. The guide typically includes information on the accessibility of buildings, classrooms, and facilities on campus, as well as information on accessibility services and resources available to students.
 
 Here are some features in the campus accessibility guide:
 
